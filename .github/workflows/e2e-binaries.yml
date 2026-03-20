@@ -40,17 +40,17 @@ jobs:
       - name: Build binaries
         run: |
           mkdir -p dist-bun
-          bun build --compile --minify --sourcemap --target=bun-linux-x64 --outfile=dist-bun/rulesync-linux-x64 ./src/cli/index.ts
-          bun build --compile --minify --sourcemap --target=bun-linux-arm64 --outfile=dist-bun/rulesync-linux-arm64 ./src/cli/index.ts
-          bun build --compile --minify --sourcemap --target=bun-darwin-arm64 --outfile=dist-bun/rulesync-darwin-arm64 ./src/cli/index.ts
-          bun build --compile --minify --sourcemap --target=bun-darwin-x64 --outfile=dist-bun/rulesync-darwin-x64 ./src/cli/index.ts
-          bun build --compile --minify --sourcemap --target=bun-windows-x64 --outfile=dist-bun/rulesync-windows-x64.exe ./src/cli/index.ts
+          bun build --compile --minify --sourcemap --target=bun-linux-x64 --outfile=dist-bun/agent-loop-flow-linux-x64 ./src/cli/index.ts
+          bun build --compile --minify --sourcemap --target=bun-linux-arm64 --outfile=dist-bun/agent-loop-flow-linux-arm64 ./src/cli/index.ts
+          bun build --compile --minify --sourcemap --target=bun-darwin-arm64 --outfile=dist-bun/agent-loop-flow-darwin-arm64 ./src/cli/index.ts
+          bun build --compile --minify --sourcemap --target=bun-darwin-x64 --outfile=dist-bun/agent-loop-flow-darwin-x64 ./src/cli/index.ts
+          bun build --compile --minify --sourcemap --target=bun-windows-x64 --outfile=dist-bun/agent-loop-flow-windows-x64.exe ./src/cli/index.ts
 
       - name: Cache binaries
         uses: actions/cache/save@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: dist-bun
-          key: rulesync-binaries-${{ github.sha }}
+          key: agent-loop-flow-binaries-${{ github.sha }}
           enableCrossOsArchive: true
 
   e2e:
@@ -69,7 +69,7 @@ jobs:
         uses: actions/cache/restore@cdf6c1fa76f9f475f3d7449005a359c84ca0f306 # v5.0.3
         with:
           path: dist-bun
-          key: rulesync-binaries-${{ github.sha }}
+          key: agent-loop-flow-binaries-${{ github.sha }}
           enableCrossOsArchive: true
           fail-on-cache-miss: true
 
@@ -79,16 +79,16 @@ jobs:
           MATRIX_OS: ${{ matrix.os }}
         run: |
           if [ "$MATRIX_OS" = "ubuntu-latest" ]; then
-            chmod +x dist-bun/rulesync-linux-x64
-            BINARY_PATH=dist-bun/rulesync-linux-x64
+            chmod +x dist-bun/agent-loop-flow-linux-x64
+            BINARY_PATH=dist-bun/agent-loop-flow-linux-x64
           elif [ "$MATRIX_OS" = "macos-latest" ]; then
             # macos-latest is Apple Silicon (arm64)
-            chmod +x dist-bun/rulesync-darwin-arm64
-            BINARY_PATH=dist-bun/rulesync-darwin-arm64
+            chmod +x dist-bun/agent-loop-flow-darwin-arm64
+            BINARY_PATH=dist-bun/agent-loop-flow-darwin-arm64
           else
             # macos-15-intel is Intel (x64)
-            chmod +x dist-bun/rulesync-darwin-x64
-            BINARY_PATH=dist-bun/rulesync-darwin-x64
+            chmod +x dist-bun/agent-loop-flow-darwin-x64
+            BINARY_PATH=dist-bun/agent-loop-flow-darwin-x64
           fi
           echo "BINARY_PATH=$BINARY_PATH" >> $GITHUB_ENV
 
@@ -96,7 +96,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          echo "BINARY_PATH=dist-bun/rulesync-windows-x64.exe" >> $GITHUB_ENV
+          echo "BINARY_PATH=dist-bun/agent-loop-flow-windows-x64.exe" >> $GITHUB_ENV
 
       - name: Setup mise
         uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v2
@@ -108,5 +108,5 @@ jobs:
 
       - name: Test binary
         env:
-          RULESYNC_CMD: ${{ env.BINARY_PATH }}
+          AGENT_LOOP_FLOW_CMD: ${{ env.BINARY_PATH }}
         run: pnpm test:e2e

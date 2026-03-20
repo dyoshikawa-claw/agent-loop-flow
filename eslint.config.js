@@ -64,6 +64,7 @@ export default defineConfig([
               "src/utils/file.test.ts",
               "src/test-utils/test-directories.ts",
               "src/flow/flow-parser.test.ts",
+              "src/e2e/**/*.spec.ts",
               "scripts/**/*.ts",
             ],
             allowSameModule: false,
@@ -98,6 +99,23 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "off", // Allow any in tests
       "no-new": "off", // Allow new in tests
       "no-type-assertion/no-type-assertion": "off", // Allow type assertions in tests
+    },
+  },
+
+  {
+    files: ["src/**/*.spec.ts"],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        project: "./tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    rules: {
+      "no-empty": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-new": "off",
+      "no-type-assertion/no-type-assertion": "off",
     },
   },
 
