@@ -10,13 +10,13 @@
     "orchestration",
     "skills"
   ],
-  "homepage": "https://github.com/dyoshikawa-claw/agent-loop-flow#readme",
+  "homepage": "https://github.com/dyoshikawa/agent-loop-flow#readme",
   "bugs": {
-    "url": "https://github.com/dyoshikawa-claw/agent-loop-flow/issues"
+    "url": "https://github.com/dyoshikawa/agent-loop-flow/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dyoshikawa-claw/agent-loop-flow.git"
+    "url": "https://github.com/dyoshikawa/agent-loop-flow.git"
   },
   "license": "MIT",
   "author": "dyoshikawa",
